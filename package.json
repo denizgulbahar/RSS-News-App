@@ -9,10 +9,21 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "expo": "~49.0.15",
+    "@expo/vector-icons": "^13.0.0",
+    "@expo/webpack-config": "^19.0.0",
+    "expo": "^49.0.16",
     "expo-status-bar": "~1.6.0",
+    "fast-xml-parser": "^4.3.2",
     "react": "18.2.0",
-    "react-native": "0.72.6"
+    "react-dom": "18.2.0",
+    "react-native": "0.72.6",
+    "react-native-rss-parser": "^1.5.1",
+    "react-native-web": "~0.19.6",
+    "react-native-webview": "13.2.2",
+    "stream": "^0.0.2",
+    "timers": "^0.1.1",
+    "typescript": "^5.2.2",
+    "xml2js": "^0.6.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

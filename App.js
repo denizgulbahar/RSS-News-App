@@ -3,6 +3,7 @@ import { StyleSheet, Text, View,FlatList,TouchableOpacity,ScrollView,Image,Dimen
 import { parseString } from 'xml2js';
 import FullScreenLoading from "./component/loading/FullScreenLoading"
 import {WebView }from 'react-native-webview';
+import CloseButton from './component/closeButton';
 
 export default function App() {
   const width = Dimensions.get('window').width;
@@ -10,7 +11,7 @@ export default function App() {
   const[isLoading,setIsLoading] = useState(true)
   const[selectedURL,setSelectedURL] = useState("")
   const[openWeb,setOpenWeb] = useState(false)
-  const loadingMessage = "Haber başlıkları yükleniyor, lütfen bekleyiniz..."
+  const [message,setMessage] = useState("")
   async function getXMLResponse(url) {
     try {
       const response = await fetch(url, {
@@ -88,6 +89,7 @@ export default function App() {
     }
   };
   useEffect(() => {
+    setMessage("Haberler Yükleniyor, lütfen bekleyiniz...")
     const fetchDataAll = async () => {
       await fetchData(); 
       await fetchData2(); 
@@ -108,8 +110,13 @@ export default function App() {
 ];
 
 const navigateToURL = (url) => {
-  setOpenWeb(true);
+  setMessage("Haber açılıyor...")
+  setIsLoading(true);
   setSelectedURL(url);
+  setOpenWeb(true);
+  setTimeout(() => {
+    setIsLoading(false);
+  }, 1000); 
 };
 
 const renderItem1 = ({ item,index }) => {
@@ -158,14 +165,17 @@ const createRenderItem = (index) => ({ item }) => {
   );
 };
    if(isLoading) {
-      return (<FullScreenLoading message={loadingMessage} ></FullScreenLoading>)
+      return (<FullScreenLoading message={message} ></FullScreenLoading>)
     } else {
         if(openWeb) {
           return (
+          <View style={{flex:1,paddingVertical:50,paddingHorizontal:30}}>
+          <CloseButton onPress={() => setOpenWeb(false)}/>
           <WebView
           source={{ uri: selectedURL }}
-          style={{width:width-60,height:300,padding:40,margin:30 }}
+          style={{flex:1}}
           /> 
+          </View>
           )} else {
             return (
               <ScrollView contentContainerStyle={styles.container} horizontal={true}>
